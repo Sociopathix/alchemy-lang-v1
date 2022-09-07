@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-enum class TokenType 
+enum TokenType 
 {
     // Single-character tokens.
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACKET, RIGHT_BRACKET, LEFT_BRACE, RIGHT_BRACE,
@@ -25,7 +25,7 @@ enum class TokenType
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
     // Other.
-    END
+    END_LINE, END_FILE 
 };
 
 #endif

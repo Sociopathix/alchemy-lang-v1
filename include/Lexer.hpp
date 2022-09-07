@@ -3,6 +3,8 @@
 
 #include "Token.hpp"
 
+#include <vector>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -12,13 +14,14 @@ class Lexer
 
         // Class Variables.
         string code;
+        vector<Token> tokens;
 
         // Class Constructor.
-        Lexer();
+        Lexer(string code);
         
         // Class Functions.
-        list<Token> tokenize(string code);
-        
+        vector<Token> tokenize();
+        void print_tokens(); 
 };
 
 #endif

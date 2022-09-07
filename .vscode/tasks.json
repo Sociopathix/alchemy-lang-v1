@@ -2,28 +2,19 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: cpp.exe build active file",
-			"command": "C:\\cygwin64\\bin\\cpp.exe",
-			"args": [
-				"-fdiagnostics-color=always",
-				"-g",
-				"${fileDirname}\\Lexer.cpp",
-				//"${fileDirname}\\Lexer.hpp",
-				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "label": "g++.exe build active file",
+            "type": "shell",
+            "command": "g++ -g ${workspaceFolder}/src/**.cpp ${workspaceFolder}/include/**.hpp -o Alchemy.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
 			],
-			"options": {
-				"cwd": "${fileDirname}"
-			},
-			"problemMatcher": [
-				"$gcc"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "compiler: C:\\cygwin64\\bin\\cpp.exe"
-		}
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
 	]
 }

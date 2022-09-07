@@ -19,7 +19,6 @@ class Alchemy
         
         // Class Functions.
         void run();
-        
 };
 
 #endif

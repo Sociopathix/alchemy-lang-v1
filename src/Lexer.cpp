@@ -1,21 +1,13 @@
-#include "Lexer.hpp"
+#include "../include/Lexer.hpp"
 
-#include <algorithm>
-#include <iostream>
-using namespace std;
-
-Lexer::Lexer()
+Lexer::Lexer(string code)
 {
-    return;
+    this->code = code;
 }
 
-list<Token> Lexer::tokenize(string code)
+vector<Token> Lexer::tokenize()
 {
-    cout << "Lexer Output: " << code << endl;
-
-    list<Token> tokens;
-
-    const list<string> keywords = 
+    string keywords[] = 
     {
         "and", "class", "if", "else", "elif", 
         "else", "true", "false", "func", "for", 
@@ -32,7 +24,7 @@ list<Token> Lexer::tokenize(string code)
     {
         char current_character = code[position];
 
-        if (current_character == ' ' || current_character == '\n')
+        if (current_character == ' ' or current_character == '\n')
         {
             position++;
             continue;
@@ -67,12 +59,13 @@ list<Token> Lexer::tokenize(string code)
             tokens.push_back(new_token);
         }
 
+        // Keywords and variables.
         else if (variable_characters.find(current_character) != string::npos) 
         {
-            string result = to_string(current_character);
+            string result = "";
             
             // while the next char is a valid variable/keyword charater
-            while (variable_characters.find(code[position]) != string::npos && position < LENGTH) 
+            while (variable_characters.find(code[position]) != string::npos and position < LENGTH) 
             {
                 // adding the char to the string
                 result += code[position];
@@ -80,7 +73,8 @@ list<Token> Lexer::tokenize(string code)
             }
 
             // if the keyword is not a built in keyword
-            if (find(keywords.begin(), keywords.end(), result) == keywords.end())
+            int n = (sizeof(keywords) / sizeof(*keywords));
+            if(find(keywords, keywords + n, result) == keywords + n)
             {
                 cout << "Lexer Error: Unexpected token " << result << " (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
                 break;
@@ -88,6 +82,16 @@ list<Token> Lexer::tokenize(string code)
 
             TokenType type = TokenType::KEYWORD;
             Token new_token = Token(type, result);
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == ';')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::END_LINE;
+            Token new_token = Token(type, ";");
             tokens.push_back(new_token);
         }
 
@@ -99,5 +103,29 @@ list<Token> Lexer::tokenize(string code)
         }
     }
 
+   // adding the string to the tokens
+    TokenType type = TokenType::END_FILE;
+    Token new_token = Token(type, "EOF");
+    tokens.push_back(new_token); 
+
     return tokens;
+}
+
+void Lexer::print_tokens()
+{
+    int counter = 0;
+    cout << "TOKENS:" << endl << "{" << endl;
+    for (Token token : tokens) 
+    {
+        cout << "\tTYPE: " << token.get_type() << "\t VALUE: " << token.get_value();
+        if (counter < tokens.size() - 1)
+        {
+            cout << " ," << endl;
+        }
+
+        counter++;
+    }
+
+    cout << endl; 
+    cout << "}" << endl;
 }
