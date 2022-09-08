@@ -5,6 +5,8 @@
 #include "Token.hpp"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 class Alchemy
@@ -12,13 +14,16 @@ class Alchemy
     public:
 
         // Class Variables.
+        string file_path;
         string code;
 
-        // Class Constructor.
-        Alchemy(string code);
+        // Class Constructors.
+        Alchemy();
+        Alchemy(string file_path);
         
         // Class Functions.
         void run();
+        string read_file(string file_path);
 };
 
 #endif

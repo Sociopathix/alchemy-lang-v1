@@ -14,7 +14,7 @@ vector<Token> Lexer::tokenize()
         "while", "null", "or", "print", "return", 
         "this", "super", "var"
     };
-    const string variable_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890";
+    const string variable_characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 
     const int LENGTH = code.length();
     int line = 0;
@@ -24,14 +24,8 @@ vector<Token> Lexer::tokenize()
     {
         char current_character = code[position];
 
-        if (current_character == ' ' or current_character == '\n')
-        {
-            position++;
-            continue;
-        }
-
         // start of a string!!
-        else if (current_character == '"')
+        if (current_character == '"')
         {
             string result = "";
             position++;
@@ -80,8 +74,110 @@ vector<Token> Lexer::tokenize()
                 break;
             }
 
+            position++;
+            
             TokenType type = TokenType::KEYWORD;
             Token new_token = Token(type, result);
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '(')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::LEFT_PAREN;
+            Token new_token = Token(type, "(");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == ')')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::RIGHT_PAREN;
+            Token new_token = Token(type, ")");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '[')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::LEFT_BRACKET;
+            Token new_token = Token(type, "[");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == ']')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::RIGHT_BRACKET;
+            Token new_token = Token(type, "]");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '{')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::LEFT_BRACE;
+            Token new_token = Token(type, "{");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '}')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::RIGHT_BRACE;
+            Token new_token = Token(type, "}");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == ',')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::COMMA;
+            Token new_token = Token(type, ",");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '.')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::DOT;
+            Token new_token = Token(type, ".");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '-')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::MINUS;
+            Token new_token = Token(type, "-");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '+')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::PLUS;
+            Token new_token = Token(type, "+");
             tokens.push_back(new_token);
         }
 
@@ -90,16 +186,167 @@ vector<Token> Lexer::tokenize()
             position++;
 
             // adding the string to the tokens
-            TokenType type = TokenType::END_LINE;
+            TokenType type = TokenType::SEMICOLON;
             Token new_token = Token(type, ";");
             tokens.push_back(new_token);
+        }
+
+        else if(current_character == '/')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::SLASH;
+            Token new_token = Token(type, "/");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '*')
+        {
+            position++;
+
+            // adding the string to the tokens
+            TokenType type = TokenType::ASTERICK;
+            Token new_token = Token(type, "*");
+            tokens.push_back(new_token);
+        }
+
+        else if(current_character == '!')
+        {
+            position++;
+            current_character = code[position];
+            
+            if(current_character == '=')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::EXCL_EQUAL;
+                Token new_token = Token(type, "!=");
+                tokens.push_back(new_token);
+            }
+
+            else
+            {
+                position++;
+                
+                // adding the string to the tokens
+                TokenType type = TokenType::EXCL;
+                Token new_token = Token(type, "!");
+                tokens.push_back(new_token);
+            }
+        }
+
+        else if(current_character == '=')
+        {
+            position++;
+            current_character = code[position];
+            
+            if(current_character == '=')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::EQUAL_EQUAL;
+                Token new_token = Token(type, "==");
+                tokens.push_back(new_token);
+            }
+
+            else
+            {
+                position++;
+                
+                // adding the string to the tokens
+                TokenType type = TokenType::EQUAL;
+                Token new_token = Token(type, "=");
+                tokens.push_back(new_token);
+            }
+        }
+
+        else if(current_character == '>')
+        {
+            position++;
+            current_character = code[position];
+            
+            if(current_character == '=')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::GREATER_EQUAL;
+                Token new_token = Token(type, ">=");
+                tokens.push_back(new_token);
+            }
+            
+            else if(current_character == '>')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::RIGHT_COMMENT;
+                Token new_token = Token(type, ">>");
+                tokens.push_back(new_token);
+            }
+
+            else
+            {
+                position++;
+                
+                // adding the string to the tokens
+                TokenType type = TokenType::GREATER;
+                Token new_token = Token(type, ">");
+                tokens.push_back(new_token);
+            }
+        }
+
+        else if(current_character == '<')
+        {
+            position++;
+            current_character = code[position];
+            
+            if(current_character == '=')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::LESS_EQUAL;
+                Token new_token = Token(type, "<=");
+                tokens.push_back(new_token);
+            }
+            
+            else if(current_character == '<')
+            {
+                position++;
+
+                // adding the string to the tokens
+                TokenType type = TokenType::LEFT_COMMENT;
+                Token new_token = Token(type, "<<");
+                tokens.push_back(new_token);
+            }
+
+            else
+            {
+                position++;
+                
+                // adding the string to the tokens
+                TokenType type = TokenType::LESS;
+                Token new_token = Token(type, "<");
+                tokens.push_back(new_token);
+            }
+        }
+
+        else if (current_character == ' ' or current_character == '\n')
+        {
+            position++;
+            continue;
         }
 
         // we have a invalid character in our code
         else 
         { 
-          cout << "Lexer Error: Unexpected character " << code[position] << " (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
-          break;
+          cout << "Lexer Error: Unexpected character " + code[position] << " (LINE: " << line << ", COLUMN: " << position << "))"  << endl;
+          cout << to_string(current_character);
+          position++;
         }
     }
 

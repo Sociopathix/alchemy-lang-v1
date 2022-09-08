@@ -1,14 +1,21 @@
 #include "../include/Alchemy.hpp"
 
-Alchemy::Alchemy(string code)
+Alchemy::Alchemy()
 {
-    this->code = code;
+    file_path = "code.ach";
+    read_file(file_path);
+}
+
+Alchemy::Alchemy(string file_path)
+{
+    this->file_path = file_path;
+    read_file(file_path);
 }
 
 void Alchemy::run()
 {
     cout << endl;
-    cout << "ALCHEMY CODE: " << this->code << endl;
+    cout << "ALCHEMY CODE: " << endl << code << endl;
     cout << endl;
 
     Lexer lex = Lexer(code);
@@ -16,10 +23,31 @@ void Alchemy::run()
     lex.print_tokens();
 }
 
+string Alchemy::read_file(string file_path)
+{   
+    stringstream code_stream;
+    string line;
+    ifstream file (file_path);
+
+    if(file.is_open())
+    {
+        code_stream << file.rdbuf();
+        file.close();
+    }
+
+    else
+    {
+       cout << "Unable to open file: " << file_path << endl; 
+    }
+
+    code = code_stream.str();
+    code.erase(remove(code.begin(), code.end(), '\r'), code.end());
+    return code;
+}
+
 int main()
 {
-    string code = "print \"hello world\";";
-    Alchemy alchemy = Alchemy(code);
+    Alchemy alchemy = Alchemy();
     alchemy.run();
     
     return 0;

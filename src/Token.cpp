@@ -20,10 +20,10 @@ string Token::get_type()
         "COMMA", "DOT", "MINUS", "PLUS", "SEMICOLON", "SLASH", "ASTERICK",
 
         // One or two character tokens.
-        "NOT", "NOT_EQUAL",
+        "EXCL", "EXCL_EQUAL",
         "EQUAL", "EQUAL_EQUAL",
-        "GREATER", "GREATER_EQUAL", "GREATER_GREATER",
-        "LESS", "LESS_EQUAL", "LESS_LESS",
+        "GREATER", "GREATER_EQUAL", "RIGHT_COMMENT",
+        "LESS", "LESS_EQUAL", "LEFT_COMMENT",
 
         // Literals.
         "IDENTIFIER", "STRING", "NUMBER",
@@ -31,7 +31,7 @@ string Token::get_type()
         // Keywords. Change NONE to NIL??
         "KEYWORD", // Might just simplify it down to KEYWORD...
         "AND", "CLASS", "IF", "ELSE", "FALSE", "FUNC", "FOR", "NONE", "OR",
-        "PRINT", "RETURN", "SUPER", "THIS", "TRUE", "VAR", "WHILE",
+        "PRINT", "RETURN", "SUPER", "THIS", "TRUE", "VAR", "WHILE", "NOT",
 
         // Other.
         "END_LINE", "END_FILE"
