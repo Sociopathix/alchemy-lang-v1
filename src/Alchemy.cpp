@@ -14,17 +14,20 @@ Alchemy::Alchemy(string file_path)
 
 void Alchemy::run()
 {
-    cout << endl;
+    /*cout << endl;
     cout << "ALCHEMY CODE: " << endl << code << endl;
-    cout << endl;
+    cout << endl;*/
 
-    Lexer lex = Lexer(code);
-    vector<Token> tokens = lex.tokenize();
-    lex.print_tokens();
+    Lexer lexer = Lexer(code);
+    vector<Token> tokens = lexer.tokenize();
+    //lex.print_tokens();
 
-    Parser par = Parser(tokens);
-    bool is_valid = par.parse();
-
+    Parser parser = Parser(tokens);
+    bool is_valid = parser.parse();
+    if(!is_valid)
+    {
+        exit(0);
+    }
 }
 
 string Alchemy::read_file(string file_path)

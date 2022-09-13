@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 class Parser

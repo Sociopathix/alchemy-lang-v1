@@ -41,8 +41,8 @@ vector<Token> Lexer::tokenize()
             // if the loop ended because of the end of the code and we didn't find the closing quotation mark.
             if (code[position] != '"') 
             {
-                cout << "Lexer Error: Unterminated string! (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
-                break;
+                cout << "<Lexer Error> Unterminated string! (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
+                exit(0);
             }
 
             position++;
@@ -70,8 +70,8 @@ vector<Token> Lexer::tokenize()
             int n = (sizeof(keywords) / sizeof(*keywords));
             if(find(keywords, keywords + n, result) == keywords + n)
             {
-                cout << "Lexer Error: Unexpected token " << result << " (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
-                break;
+                cout << "<Lexer Error> Unexpected token " << result << " (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
+                exit(0);
             }
 
             position++;
@@ -344,13 +344,12 @@ vector<Token> Lexer::tokenize()
         // we have a invalid character in our code
         else 
         { 
-          cout << "Lexer Error: Unexpected character " + code[position] << " (LINE: " << line << ", COLUMN: " << position << "))"  << endl;
-          cout << to_string(current_character);
-          position++;
+          cout << "<Lexer Error> Unexpected character " + code[position] << " (LINE: " << line << ", COLUMN: " << position << "))"  << endl;
+          exit(0);
         }
     }
 
-   // adding the string to the tokens
+    // adding the string to the tokens
     TokenType type = TokenType::END_FILE;
     Token new_token = Token(type, "EOF");
     tokens.push_back(new_token); 
