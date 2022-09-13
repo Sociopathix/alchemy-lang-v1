@@ -364,7 +364,7 @@ void Lexer::print_tokens()
     cout << "TOKENS:" << endl << "{" << endl;
     for (Token token : tokens) 
     {
-        cout << "\tTYPE: " << token.get_type() << "\t VALUE: " << token.get_value();
+        cout << "\tTYPE: " << token.get_type_name() << "\t VALUE: " << token.get_value();
         if (counter < tokens.size() - 1)
         {
             cout << " ," << endl;

@@ -19,8 +19,9 @@ class Token
 
         // Class Functions.
         void print_self();
-        string get_type();
+        string get_type_name();
         string get_value();
+        TokenType get_type();
 };
 
 #endif

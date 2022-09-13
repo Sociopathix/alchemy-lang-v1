@@ -2,6 +2,7 @@
 #define PARSER_HPP
 
 #include "Token.hpp"
+#include "TokenType.hpp"
 
 #include <vector>
 #include <algorithm>

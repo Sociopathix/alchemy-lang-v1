@@ -2,6 +2,7 @@
 #define ALCHEMY_HPP
 
 #include "Lexer.hpp"
+#include "Parser.hpp"
 #include "Token.hpp"
 
 #include <iostream>

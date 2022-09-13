@@ -21,6 +21,10 @@ void Alchemy::run()
     Lexer lex = Lexer(code);
     vector<Token> tokens = lex.tokenize();
     lex.print_tokens();
+
+    Parser par = Parser(tokens);
+    bool is_valid = par.parse();
+
 }
 
 string Alchemy::read_file(string file_path)

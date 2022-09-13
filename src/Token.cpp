@@ -6,12 +6,7 @@ Token::Token(TokenType type, string value)
     this->value = value;
 }
 
-string Token::get_value()
-{
-    return value;
-}
-
-string Token::get_type()
+string Token::get_type_name()
 {
     string type_names[] = 
     {
@@ -39,4 +34,14 @@ string Token::get_type()
 
     string type_name = type_names[type];
     return type_name;
+}
+
+string Token::get_value()
+{
+    return value;
+}
+
+TokenType Token::get_type()
+{
+    return type;
 }
