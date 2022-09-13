@@ -38,12 +38,24 @@ bool Parser::parse()
                     // If at least one string has been added, continue.            
                     output << tokens[position + 1].get_value();
                     position += 2; // Increment by 2, for print and string.
+                    token = tokens[position];
                     break;
                 
                 default:
 
                     cout << "<Parser Error> Unexpected token " << tokens[position + 1].get_type_name() << " expected string! (LINE: " << line << ", TOKEN: " << position  % line + 1 << ")"  << endl;
                     return false;
+            }
+
+            while(token.get_type() == TokenType::PLUS)
+            {
+                if(tokens[position + 1].get_type() == TokenType::STRING)
+                {
+                   output << tokens[position + 1].get_value(); 
+                   position += 2; // Increment by 2, for plus and string.
+                   token = tokens[position];
+                   continue;
+                }
             }
 
             if (tokens[position].get_type() == TokenType::SEMICOLON)
@@ -53,6 +65,7 @@ bool Parser::parse()
                 output.clear();
                 position++;
                 line++;
+                token = tokens[position];
                 continue;
             }
 

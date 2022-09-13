@@ -20,7 +20,7 @@ void Alchemy::run()
 
     Lexer lexer = Lexer(code);
     vector<Token> tokens = lexer.tokenize();
-    //lex.print_tokens();
+    //lexer.print_tokens();
 
     Parser parser = Parser(tokens);
     bool is_valid = parser.parse();
