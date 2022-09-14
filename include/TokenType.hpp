@@ -1,9 +1,6 @@
 #ifndef TOKENTYPE_HPP
 #define TOKENTYPE_HPP
 
-#include <iostream>
-using namespace std;
-
 enum TokenType 
 {
     // Single-character tokens.
@@ -19,9 +16,8 @@ enum TokenType
     // Literals.
     IDENTIFIER, STRING, NUMBER,
 
-    // Keywords. Change NONE to NIL??
-    KEYWORD, // Might just simplify it down to KEYWORD...
-    AND, CLASS, IF, ELSE, FALSE, FUN, FOR, NONE, OR,
+    // Keywords.
+    AND, CLASS, IF, ELSE, FALSE, FUNC, FOR, NONE, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE, NOT,
 
     // Other.

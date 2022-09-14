@@ -4,6 +4,7 @@
 #include "Lexer.hpp"
 #include "Parser.hpp"
 #include "Token.hpp"
+#include "SyntaxTree.hpp"
 
 #include <iostream>
 #include <fstream>

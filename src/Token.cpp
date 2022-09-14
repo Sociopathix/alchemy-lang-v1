@@ -1,5 +1,10 @@
 #include "../include/Token.hpp"
 
+Token::Token()
+{
+    return;
+}
+
 Token::Token(TokenType type, string value)
 {
     this->type = type;
@@ -24,7 +29,6 @@ string Token::get_type_name()
         "IDENTIFIER", "STRING", "NUMBER",
 
         // Keywords. Change NONE to NIL??
-        "KEYWORD", // Might just simplify it down to KEYWORD...
         "AND", "CLASS", "IF", "ELSE", "FALSE", "FUNC", "FOR", "NONE", "OR",
         "PRINT", "RETURN", "SUPER", "THIS", "TRUE", "VAR", "WHILE", "NOT",
 

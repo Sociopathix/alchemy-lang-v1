@@ -1,95 +1,146 @@
 #include "../include/Parser.hpp"
 
+// NOTES:
+/*  var num = 1; 
+    print(num);
+
+    {
+        type : SyntaxTreeType::ASSIGNMENT
+        operator : =
+        left (ast) : 
+        {
+            type : SyntaxTreeType::IDENTIFIER
+            value : "num"
+        }
+        right (ast) : 
+        {
+            type : SyntaxTreeType::NUMBER
+            value : 1
+        }
+    }
+
+    {
+        type : SyntaxTreeType::PRINT
+        args : 
+        [
+            {
+                type : SyntaxTreeType::IDENTIFIER
+                value : "num"
+            }
+        ]
+    }
+
+    Types of ASTs:
+
+    number 
+    {
+        type : NUMBER, 
+        value : TokenType::NUMBER
+    }
+
+    string 
+    {
+        type : STRING, 
+        value : TokenType::STRING
+    }
+
+    identifier 
+    {
+        type : IDENTIFIER, 
+        value : NAME
+    }
+
+    print 
+    {
+        type : PRINT, 
+        args : [ASTs...]
+    }
+
+    call 
+    {
+        type : CALL, 
+        func : 
+        {
+            type : IDENTIFIER,
+            value : TokenType::STRING
+        }, 
+        args : [ASTs...]
+    }
+
+    if
+    {
+        type : IF,
+        condition(s) : ASTs
+        then : AST,
+        else : AST
+    }
+
+    assignment
+    {
+        type : ASSIGNMENT,
+        operator : "=",
+        left : AST,
+        right : AST
+    }
+
+    binary (operation)
+    {
+        type : BINARY,
+        operator : OPERATOR,
+        left : AST,
+        right : AST
+    }
+
+    program
+    {
+        type : PROGRAM
+        body : [ASTs...]
+    }
+
+    */
+
+// Class contructor.
 Parser::Parser(vector<Token> tokens)
 {
     this->tokens = tokens;
 }
 
-bool Parser::parse()
+// Main parse function.
+vector<SyntaxTree> Parser::parse()
 {
-    const int length = tokens.size();
-    int position = 0;
-    int line = 1;
-    stringstream output;
+    current_token = this->tokens.front();
+    position = 0;
 
-    cout << endl << "<BOF Started>" << endl << endl;
-
-    while(position < length)
+    while(current_token.get_type() != TokenType::END_FILE)
     {
-        Token token = tokens[position];
-
-        // If the token is the print keyword.
-        if(token.get_type() == TokenType::KEYWORD and token.get_value() == "print")
-        {
-            switch(tokens[position + 1].get_type()) 
-            {
-                case TokenType::SEMICOLON:
-
-                    cout << "<Parser Error> Unexpected end of line, expected string! (LINE: " << line << ", TOKEN: " << position  % line + 1 << ")"  << endl;
-                    return false;
-                
-                case TokenType::END_FILE:
-
-                    cout << "<Parser Error> Unexpected end of file, expected string! (LINE: " << line << ", TOKEN: " << position  % line + 1 << ")"  << endl;
-                    return false;
-                
-                case TokenType::STRING:
-
-                    // If at least one string has been added, continue.            
-                    output << tokens[position + 1].get_value();
-                    position += 2; // Increment by 2, for print and string.
-                    token = tokens[position];
-                    break;
-                
-                default:
-
-                    cout << "<Parser Error> Unexpected token " << tokens[position + 1].get_type_name() << " expected string! (LINE: " << line << ", TOKEN: " << position  % line + 1 << ")"  << endl;
-                    return false;
-            }
-
-            while(token.get_type() == TokenType::PLUS)
-            {
-                if(tokens[position + 1].get_type() == TokenType::STRING)
-                {
-                   output << tokens[position + 1].get_value(); 
-                   position += 2; // Increment by 2, for plus and string.
-                   token = tokens[position];
-                   continue;
-                }
-            }
-
-            if (tokens[position].get_type() == TokenType::SEMICOLON)
-            {
-                cout << output.str() << endl;
-                output.str("");
-                output.clear();
-                position++;
-                line++;
-                token = tokens[position];
-                continue;
-            }
-
-            else
-            {
-                cout << "<Parser Error> No EOL in line, expected semicolon! (LINE: " << line << ", TOKEN: " << position % line + 1 << ")"  << endl;
-                return false;
-            }
-
-            return false;
-        }
-
-        else if(token.get_type() == TokenType::END_FILE)
-        {
-            cout << endl << "<EOF Reached>" << endl;
-            return true;
-        }
-
-        else
-        {
-            cout << "<Parser Error> Unexpected token " << token.get_type_name() << "! (LINE: " << line << ", TOKEN: " << position % line + 1 << ")"  << endl;
-            return false;
-        }
+        syntax_tree.push_back(parse_expression());
+        increment_next();
     }
 
-    return false;
+    print_syntax_tree();
+
+    return syntax_tree;
+}
+
+// Parse the token in current_token.
+SyntaxTree Parser::parse_expression()
+{
+    return SyntaxTree(SyntaxTreeType::SYN_IDENTIFIER);
+}
+
+// Increment current_token to the next in tokens.
+void Parser::increment_next()
+{
+    position++;
+    current_token = tokens[position];
+}
+
+void Parser::print_syntax_tree()
+{
+    for(SyntaxTree st : syntax_tree)
+    {
+        cout << st.get_type_name() << endl;
+    }
+
+    
 }

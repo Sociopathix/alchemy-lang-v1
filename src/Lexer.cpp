@@ -59,7 +59,7 @@ vector<Token> Lexer::tokenize()
             string result = "";
             
             // while the next char is a valid variable/keyword charater
-            while (variable_characters.find(code[position]) != string::npos and position < LENGTH) 
+            while (variable_characters.find(code[position]) != string::npos && position < LENGTH) 
             {
                 // adding the char to the string
                 result += code[position];
@@ -75,10 +75,19 @@ vector<Token> Lexer::tokenize()
             }
 
             position++;
-            
-            TokenType type = TokenType::KEYWORD;
-            Token new_token = Token(type, result);
-            tokens.push_back(new_token);
+
+            if(result == "print")
+            {            
+                TokenType type = TokenType::PRINT;
+                Token new_token = Token(type, result);
+                tokens.push_back(new_token);
+            }
+
+            else
+            {
+                cout << "<Lexer Error> Unexpected token " << result << " (LINE: " << line << ", COLUMN: " << position << ")"  << endl;
+                exit(0);
+            }
         }
 
         else if(current_character == '(')
@@ -335,7 +344,7 @@ vector<Token> Lexer::tokenize()
             }
         }
 
-        else if (current_character == ' ' or current_character == '\n')
+        else if (current_character == ' ' || current_character == '\n')
         {
             position++;
             continue;

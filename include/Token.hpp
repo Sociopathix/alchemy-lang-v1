@@ -15,6 +15,7 @@ class Token
         string value;
 
         // Class Constructor.
+        Token();
         Token(TokenType type, string value);    
 
         // Class Functions.
