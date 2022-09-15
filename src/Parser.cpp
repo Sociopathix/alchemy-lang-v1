@@ -118,7 +118,6 @@ vector<SyntaxTree> Parser::parse()
     }
 
     print_syntax_tree();
-
     return syntax_tree;
 }
 
@@ -140,7 +139,5 @@ void Parser::print_syntax_tree()
     for(SyntaxTree st : syntax_tree)
     {
         cout << st.get_type_name() << endl;
-    }
-
-    
+    }  
 }

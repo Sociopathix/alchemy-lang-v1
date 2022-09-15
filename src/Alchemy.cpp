@@ -20,11 +20,10 @@ void Alchemy::run()
 
     Lexer lexer = Lexer(code);
     vector<Token> tokens = lexer.tokenize();
-    lexer.print_tokens();
+    //lexer.print_tokens();
 
     Parser parser = Parser(tokens);
     vector<SyntaxTree> tree = parser.parse();
-    parser.print_syntax_tree();
 }
 
 string Alchemy::read_file(string file_path)
